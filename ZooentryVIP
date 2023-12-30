@@ -1,0 +1,23 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract ZooEntryVIP {
+    uint256 public constant minAge = 18;
+    uint256 public constant maxAge = 65;
+
+    event AllowedVIPEntry(address indexed entrant, uint256 age);
+
+    function enterVIPZone(uint256 age) external {
+        require(age >= minAge, "Sorry, you are too young for VIP zoo entry.");
+        require(age <= maxAge, "Sorry, you are too old for VIP zoo entry.");
+
+        assert(age >= 0); // Ensure age is non-negative (assertion for internal consistency).
+
+        
+        if (age % 2 != 0) {
+            revert("VIP entry is only allowed for individuals with even ages.");
+        }
+
+        emit AllowedVIPEntry(msg.sender, age);
+    }
+}
